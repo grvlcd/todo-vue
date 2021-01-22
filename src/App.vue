@@ -1,11 +1,29 @@
 <template>
   <div id="nav">
     <router-link to="/">Home</router-link> |
-    <router-link to="/about">About</router-link>
+    <router-link to="/login" v-if="!isAuthenticated">Login</router-link>
+    <router-link
+      to="/login"
+      class="btn btn-link"
+      v-if="isAuthenticated"
+      @click="onLogout"
+      >Logout</router-link
+    >
   </div>
-  <router-view/>
+  <router-view />
 </template>
-
+<script>
+import { mapGetters, mapActions } from "vuex";
+export default {
+  computed: mapGetters(["isAuthenticated"]),
+  methods: {
+    ...mapActions(["logoutUser"]),
+    onLogout() {
+      this.logoutUser();
+    },
+  },
+};
+</script>
 <style>
 #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
